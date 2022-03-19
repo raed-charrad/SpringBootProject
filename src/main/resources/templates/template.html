@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+ <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="utf-8">
+<title>Gestion des Produits</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+ <!-- Brand -->
+ <a class="navbar-brand" href="#">Gestion de produits</a>
+ <!-- Links -->
+ <ul class="navbar-nav">
+
+ <!-- Dropdown -->
+ <li class="nav-item dropdown">
+ <button  type="button" class="btn btn-secondary dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown">
+ Produits
+ </button>
+ <div class="dropdown-menu">
+ <a class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
+ <a class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
+ </div>
+  </li>
+ </ul>
+
+
+</nav>
+<section layout:fragment="Mycontent" >
+</section>
+</body>
+</html>
+ 
