@@ -1,9 +1,6 @@
 package com.example.produits.controllers;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -32,14 +29,15 @@ public class CatController {
 	public String saveProduit(@Valid produit produit,
 	 BindingResult bindingResult,
 	 ModelMap modelMap) {
-	 if (bindingResult.hasErrors()) {
+	if (bindingResult.hasErrors()) {
+	modelMap.addAttribute("ajout",true);
 	 return "createProduit";
 	 }
 	 produit saveProduit = produitService.saveProduit(produit);
 	 String msg = "produit enregistré avec Id " +
 	saveProduit.getIdProduit();
 	 modelMap.addAttribute("msg", msg);
-	 return "createProduit";
+	 return this.listeProduits(modelMap,0,2);
 	 } 
 
 	@RequestMapping("/ListeProduits")
@@ -76,8 +74,8 @@ public class CatController {
 			 @RequestParam(name = "size", defaultValue = "2") int size)
 	 {
 		produit p= produitService.getProduit(id);
-	 modelMap.addAttribute("produit", p);
-	 modelMap.addAttribute("ajout", false);
+	 	modelMap.addAttribute("produit", p);
+	 	modelMap.addAttribute("ajout", false);
 
 	 Page<produit> prods = produitService.getAllProduitsParPage(page,size);
 				 modelMap.addAttribute("produits", prods);
@@ -98,15 +96,16 @@ public class CatController {
 		return "search";
 	}
 	@RequestMapping("/updateProduit")
-	public String updateProduit(@ModelAttribute("produit") produit produit,
-	 @RequestParam("date") String date,
+	public String updateProduit(@Valid produit produit,
+	BindingResult bindingResult,
 	 ModelMap modelMap  ,@RequestParam(name = "page", defaultValue = "0") int page,
 	 @RequestParam(name = "size", defaultValue = "2") int size) throws ParseException
 	 {
 	 //conversion de la date
-	 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-	 Date dateCreation = dateformat.parse(String.valueOf(date));
-	 produit.setDateCreation(dateCreation);
+		if (bindingResult.hasErrors()){
+			modelMap.addAttribute("ajout", false);
+			return "createProduit";
+		}
 	 produitService.updateProduit(produit);
 	 Page<produit> prods = produitService.getAllProduitsParPage(page,size);
 	 modelMap.addAttribute("produits", prods);
