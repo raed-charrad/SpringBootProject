@@ -1,49 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorator="template">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
 
 
 <head>
-<meta charset="utf-8">
-<title>Create produit</title>
-<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
- <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
- <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>Create produit</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
-<div layout:fragment="Mycontent">
-<div class="container">
-<div class="card-body">
-<form action="saveProduit" method="post">
-<div class="form-group">
-<label class="control-label">Nom Produit :</label>
-<input type="text" name="nomProduit" class="form-control" th:value="${produit.nomProduit}"/>
-<span th:errors=${produit.nomProduit} class="text-danger"> </span>
 
-</div>
-<div class="form-group">
-<label class="control-label">Prix Produit :</label>
-<input type="text" name="prixProduit" class="form-control" th:value="${produit.prixProduit}" />
-<span th:errors=${produit.prixProduit} class="text-danger"> </span>
-</div>
-<div class="form-group">
-<label class="control-label">date création :</label>
-<input type="date" name="dateCreation" class="form-control" th:value="${produit.dateCreation}"/>
-<span th:errors=${produit.dateCreation} class="text-danger"> </span> 
-</div>
-<div>
-<button type="submit" class="btn btn-primary">Ajouter</button>
-</div>
-</form>
-</div>
-<div th:if="${msg}">
-<p th:text="'Message: '+${msg}"/>
-</div>
-<br/>
-<br/>
-<a href="ListeProduits">Liste Produits</a>
-</div>
-</div>
+<body>
+    <div layout:fragment="Mycontent">
+        <div class="container">
+            <div class="col-6">
+                <h1 th:text = "${ajout} ? 'Ajouter Produit' : 'Editer Produit'"></h1>
+            <div class="card-body">
+                
+                <form th:action="${ajout} ? saveProduit: 'updateProduit'" method="post">
+                    <div class="form-group">
+                        <label class="control-label">Nom Produit :</label>
+                        <input type="text" name="nomProduit" class="form-control" th:value="${produit.nomProduit}" />
+                        <span th:errors=${produit.nomProduit} class="text-danger"> </span>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Prix Produit :</label>
+                        <input type="text" name="prixProduit" class="form-control" th:value="${produit.prixProduit}" />
+                        <span th:errors=${produit.prixProduit} class="text-danger"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">date création :</label>
+                        <input type="date" name="dateCreation" class="form-control"
+                            th:value="${produit.dateCreation}" />
+                        <span th:errors=${produit.dateCreation} class="text-danger"> </span>
+                    </div>
+                    <div th:if="${ajout}">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                        <div th:if="${not ajout}">
+                        <button type="submit" class="btn btn-primary">modifier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+            <div th:if="${msg}">
+                <p th:text="'Message: '+${msg}" />
+            </div>
+            <br />
+            <br />
+            <a href="searchProduit">Liste Produits</a>
+        </div>
+    </div>
 </body>
+
 </html>
