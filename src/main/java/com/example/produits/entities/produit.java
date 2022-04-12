@@ -28,7 +28,7 @@ public class produit {
 		private String nomProduit;
 		@Min(value = 10)
 		@Max(value = 10000) 
-
+		@NotNull
 		private Double prixProduit;
 		@Temporal(TemporalType.DATE)
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
