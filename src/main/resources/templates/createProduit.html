@@ -20,6 +20,8 @@
                 
                 <form th:action="${ajout} ? saveProduit: 'updateProduit'" method="post">
                     <div class="form-group">
+                        <input type="hidden" class="form-control" name="idProduit" th:value="${produit.idProduit}"
+									>
                         <label class="control-label">Nom Produit :</label>
                         <input type="text" name="nomProduit" class="form-control" th:value="${produit.nomProduit}" />
                         <span th:errors=${produit.nomProduit} class="text-danger"> </span>
@@ -33,7 +35,7 @@
                     <div class="form-group">
                         <label class="control-label">date création :</label>
                         <input type="date" name="dateCreation" class="form-control"
-                            th:value="${produit.dateCreation}" />
+                            th:value="${#dates.format(produit.dateCreation, 'yyyy-MM-dd')}" />
                         <span th:errors=${produit.dateCreation} class="text-danger"> </span>
                     </div>
                     <div th:if="${ajout}">
