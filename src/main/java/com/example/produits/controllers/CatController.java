@@ -25,6 +25,7 @@ public class CatController {
 	@RequestMapping("/showCreate")
 	public String showCreate(ModelMap modelMap) {
 		modelMap.addAttribute("produit", new produit());
+		modelMap.addAttribute("ajout",true);
 	 return "createProduit";
 	 }
 	@RequestMapping("/saveProduit")
@@ -76,12 +77,14 @@ public class CatController {
 	 {
 		produit p= produitService.getProduit(id);
 	 modelMap.addAttribute("produit", p);
+	 modelMap.addAttribute("ajout", false);
+
 	 Page<produit> prods = produitService.getAllProduitsParPage(page,size);
 				 modelMap.addAttribute("produits", prods);
 				 modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 				 modelMap.addAttribute("currentPage", page);
 				 modelMap.addAttribute("size", size);
-	 return "editerProduit";
+	 return "createProduit";
 	 }
 	@RequestMapping("/searchProduit")
 	public String searchProduit(@RequestParam(name = "name", defaultValue = "") String name, ModelMap modelMap,
