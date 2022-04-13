@@ -50,7 +50,7 @@ public class CatController {
 	modelMap.addAttribute("produits", prods);
 	modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 	modelMap.addAttribute("currentPage", page);
-	return "listeProduits";
+	return "search";
 	} 
 
 	@RequestMapping("/supprimerProduit")
@@ -65,7 +65,7 @@ public class CatController {
 	 modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 	 modelMap.addAttribute("currentPage", page);
 	 modelMap.addAttribute("size", size);
-	 return "listeProduits";
+	 return "search";
 	 }
 
 	@RequestMapping("/modifierProduit")
@@ -112,7 +112,7 @@ public class CatController {
 	 modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 	 modelMap.addAttribute("currentPage", page);
 	 modelMap.addAttribute("size", size);
-	 return "listeProduits";
+	 return "search";
 	 } 
 
 
