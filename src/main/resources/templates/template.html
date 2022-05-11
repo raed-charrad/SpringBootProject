@@ -24,7 +24,7 @@
                     Produits
                 </button>
                 <div class="dropdown-menu">
-                    <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
+                    <a sec:authorize="hasRole('ADMIN')||hasRole('AGENT')" class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
                     <a   class="dropdown-item" th:href="@{searchProduit}">Lister</a>
                 </div>
             </li>
