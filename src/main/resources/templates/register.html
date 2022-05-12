@@ -11,23 +11,54 @@
 			<div class="container mt-5">
 				<div class="col-md-6 offset-md-3">
 					<div class="card">
-						<div class="card-header">Registration</div>
+						<div th:text="${registration}?'Registration':'Connexion'" class="card-header"></div>
+						<div class="alert alert-danger" th:if="${error!=null}">
+							<p th:text="${error}"></p>
+						</div>
 						<div class="card-body">
-							<form th:action="@{login}" method="post">
-								<div class="form-group">
-									<label class="control-label" >Utilisateur :</label>
-									<input type="text" name="username">
+							<form th:action="${registration}? @{register}:@{login}" method="post">
+								<div th:if="!${registration}">
+									<div class="form-group">
+										<label class="control-label">Utilisateur :</label>
+										<input type="text" name="username" class="form-control" placeholder="Username">
+									</div>
+									<div class="form-group">
+										<label class="control-label">Mot de passe :</label>
+										<input type="password" name="password" class="form-control" placeholder="Mot de passe">
+									</div>
+									<button class="btn btn-primary">se connecter</button>
+									<a href="register" class="btn btn-primary">Ajouter un Compte</a>
 								</div>
-								<div class="form-group">
-									<label class="control-label" >Mot de passe :</label>
-									<input type="password" name="password" >
-								</div>
-                                <div class="form-group">
-									<label class="control-label" >Confimer Mot de passe :</label>
-									<input type="password" name="confirmedPassword" >
-								</div>
-								<button type="submit" class="btn btn-primary">creer</button>
-                                <a href="/login"><button class="btn btn-primary">login</button></a>
+								
+								
+								<div th:if="${registration }">
+										<div class="form-group">
+											<label class="control-label" >Utilisateur :</label>
+											<input type="text" name="username" th:value="${user.username}" class="form-control">
+											<span th:errors=${user.username} class="text-danger"> </span>
+
+										</div>
+										<div class="form-group">
+											<label class="control-label" >Mot de passe :</label>
+											<input type="password" name="password" th:value="${user.password}" class="form-control">
+											<span th:errors=${user.password} class="text-danger"> </span>
+
+										</div>
+										<div class="form-group">
+											<label class="control-label" >Confimer Mot de passe :</label>
+											<input type="password" name="confirmedPassword"  th:value="${user.confirmedPassword}" class="form-control">
+											<span th:errors=${user.confirmedPassword} class="text-danger"> </span>
+
+										</div>
+										<div class="form-group">
+											<label class="control-label">Role :</label>
+											<select name="role" class="form-control">
+												<option th:each="role:${roles}" th:value="${role.id}" name="role" th:text="${role.name}"></option>
+											</select>
+										</div>
+										<button type="submit" class="btn btn-primary">creer</button>
+										<a href="login"class="btn btn-primary">login</a>
+									</div>
 							</form>
 						</div>
 					</div>

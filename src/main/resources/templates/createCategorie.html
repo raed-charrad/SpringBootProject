@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Create produit</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div layout:fragment="Mycontent">
+        <div class="container">
+            <div class="col-6">
+                <h1 th:text = "${ajout} ? 'Ajouter Categorie' : 'Editer Categorie'"></h1>
+            <div class="card-body">
+                
+                <form th:action="${ajout} ? saveCategorie: 'updateCategorie'" method="post">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="idCat" th:value="${categorie.idCat}">
+                        <label class="control-label">Nom Categorie :</label>
+                        <input type="text" name="nomCat" class="form-control" th:value="${categorie.nomCat}" />
+                        <span th:errors=${categorie.nomCat} class="text-danger"> </span>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Description Categorie :</label>
+                        <input type="text" name="descriptionCat" class="form-control" th:value="${categorie.descriptionCat}" />
+                        <span th:errors=${categorie.descriptionCat} class="text-danger"> </span>
+                    </div>
+                  
+                    <div th:if="${ajout}">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                        <div th:if="${not ajout}">
+                        <button type="submit" class="btn btn-primary">modifier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+            <div th:if="${msg}">
+                <p th:text="'Message: '+${msg}" />
+            </div>
+            <br />
+            <br />
+            <a href="ListeCategories">Liste Categories</a>
+        </div>
+    </div>
+</body>
+
+</html>

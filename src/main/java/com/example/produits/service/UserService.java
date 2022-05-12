@@ -14,6 +14,7 @@ import com.example.produits.dao.UserRepository;
 import com.example.produits.dao.RoleRepository;
 import com.example.produits.entities.Role;
 import com.example.produits.entities.User;
+import com.example.produits.security.MyUserDetails;
 
 import groovy.util.logging.Slf4j;
 
@@ -22,35 +23,38 @@ import groovy.util.logging.Slf4j;
 public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
 	@Autowired
-	private  RoleRepository roleRepository;
-	
+	private RoleRepository roleRepository;
+
 	@Autowired
 	public UserService(UserRepository userRepository) {
-	 this.userRepository = userRepository;
-	 }
+		this.userRepository = userRepository;
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	 Objects.requireNonNull(username);
-	 User user = userRepository.findUserWithName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-	 return user;
-	 } 
-	 public User saveUser(String username, String password, String confirmedPassword) {
+		Objects.requireNonNull(username);
+		User user = userRepository.findUserWithName(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+		return new MyUserDetails(user);
+	}
+
+	public User saveUser(String username, String password, String confirmedPassword, Long role) {
 		User appUser = new User();
 		if (userRepository.findUserWithName(username).isPresent() == true)
-		throw new RuntimeException("User already exists");
+			throw new RuntimeException("User already exists");
 		if (!password.equals(confirmedPassword))
-		throw new RuntimeException("Please confirm your password");
+			throw new RuntimeException("Please confirm your password");
 		appUser.setUsername(username);
 		Set<Role> roles = new HashSet<Role>();
-		Role r = new Role("ROLE_USER");
-		roleRepository.save(r);
+		Role r = roleRepository.findById(role).get();
+		// roleRepository.save(r);
 		roles.add(r);
 		appUser.setRoles(roles);
 		appUser.setPassword(password);
 		userRepository.save(appUser);
+		System.out.println("User saved successfully");
 		return appUser;
-		} 
-
-
+	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -27,19 +28,22 @@ public class UserController {
         List<Role> roles = roleRepository.findAll();
         modelMap.addAttribute("roles", roles);
         modelMap.addAttribute("user", new UserForm());
+        modelMap.addAttribute("registration",true);
         return "register";
     }
-    @RequestMapping("/saveUser")
-    public String saveUser(@Valid UserForm userForm,ModelMap modelMap, BindingResult bindingResult) {
+    @PostMapping("/register")
+    public String register(@Valid UserForm user, BindingResult bindingResult,Long role, ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             List<Role> roles = roleRepository.findAll();
             modelMap.addAttribute("roles", roles);
-            modelMap.addAttribute("user", new UserForm());
+            modelMap.addAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+            modelMap.addAttribute("registration", true);
+            modelMap.addAttribute("user", user);
             return "register";
-        }
-        userService.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
-        return "login";
 
+        }
+        userService.saveUser(user.getUsername(), user.getPassword(), user.getConfirmedPassword(),role);
+        return "redirect:/login";
     }
 
 }

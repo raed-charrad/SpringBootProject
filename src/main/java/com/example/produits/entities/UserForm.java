@@ -2,7 +2,8 @@ package com.example.produits.entities;
 
 import javax.validation.constraints.Size;
 
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import javax.validation.constraints.NotNull;
+
 
 public class UserForm {
     @NotNull
