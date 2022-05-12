@@ -59,6 +59,8 @@ public class CatController {
 			BindingResult bindingResult,
 			ModelMap modelMap) {
 		if (bindingResult.hasErrors()) {
+			modelMap.addAttribute("org.springframework.validation.BindingResult.categorie", bindingResult);
+
 			modelMap.addAttribute("ajout", true);
 			return "createCategorie";
 		}
